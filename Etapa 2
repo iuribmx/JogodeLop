@@ -1,0 +1,33 @@
+var nave_x=450
+var nave_y=250
+var nave_inimiga=100
+
+function setup() {
+	createCanvas(500, 500);
+	
+}
+
+function draw() {
+  background(0);
+  ellipse(nave_x, nave_y, 60, 40);
+  
+  if(keyIsDown(LEFT_ARROW))
+    nave_x-=5;
+   if (keyIsDown(RIGHT_ARROW))
+    nave_x+=5;
+
+  if (keyIsDown(UP_ARROW))
+    nave_y-=5;
+
+  if (keyIsDown(DOWN_ARROW))
+    nave_y+=5;
+  
+  
+  rect(10,nave_inimiga,50,50);
+	nave_inimiga+=2;
+  	if(nave_inimiga>height){
+  	  nave_inimiga=random(-500,-50);
+  }  
+
+}
+

@@ -1,0 +1,15 @@
+var nave_x=450
+var nave_y=250
+
+function setup() {
+	createCanvas(500, 500);
+	
+}
+
+function draw() {
+  background(0);
+  
+  ellipse(nave_x, nave_y, 60, 40);
+  rect(100,250,50,50);
+
+}

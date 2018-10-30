@@ -1,0 +1,68 @@
+var nave_x=20;
+var nave_y=250;
+var nave_inimiga=100;
+var disparo=false;
+var bala_x=nave_x;
+var bala_y=nave_y;
+
+
+function setup() {
+	createCanvas(500, 500);
+  	//nave_x=45;
+   // bala_x=nave_x;
+  //	nave_y=250;
+ //	bala_y=nave_y;
+	
+}
+
+function draw() {
+  background(0);
+   rect(bala_x,bala_y,5,5); // BALA
+  if(keyIsDown(CONTROL) && (! disparo)){ // DISPARO
+       disparo = true;   
+     bala_x=nave_x;
+	 bala_y=nave_y;
+   }
+     if (disparo) {
+    	bala_x=bala_x+7;
+    	if (bala_x> width) {
+        disparo = false; 
+    }
+  }
+        
+  ellipse(nave_x, nave_y, 25, 50); // NAVE ALIADA // 
+
+  
+  if(keyIsDown(LEFT_ARROW))
+    nave_x-=5;
+   if (keyIsDown(RIGHT_ARROW))
+    nave_x+=5;
+
+  if (keyIsDown(UP_ARROW))
+    nave_y-=5;
+
+  if (keyIsDown(DOWN_ARROW))
+    nave_y+=5;
+  //Espaço do jogo
+  if(nave_y<25){
+    nave_y=25;
+  }
+  if(nave_y>475){
+    nave_y=475;
+  }
+  if(nave_x<15){
+    nave_x=15;
+  }
+  if(nave_x>485){
+    nave_x=485;
+  }//
+
+  
+  rect(430,nave_inimiga,50,50); //Nave Inimiga //
+	nave_inimiga+=2;
+  	if(nave_inimiga>height){
+  	  nave_inimiga=random(-500,-50);
+  }  
+
+}
+

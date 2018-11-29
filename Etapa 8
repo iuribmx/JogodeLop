@@ -1,0 +1,155 @@
+var tamArea;
+var nave_x=20;
+var nave_y=250;
+var nave_inimiga=100;
+var velocidadeInimiga=2
+var disparo=false;
+var bala_x=nave_x;
+var bala_y=nave_y;
+var vidas=3;
+var pontos=0;
+var raio_x=15;
+var raio_y=15;
+var colisao=false;
+var corAmarelo=true
+var vida_x=250
+var vida_y=250
+var velocidade_vida=2
+var nivel=1
+var passardenivel=50
+var disparooponente=false
+var bala_inimigox
+var bala_inimigoy
+var tempo=0
+var tempodisparo=60
+var vdo=19
+
+function setup() {
+  frameRate(30)
+  tamArea = 500
+	createCanvas(500, 500);
+  	//nave_x=45;
+   // bala_x=nave_x;
+  //	nave_y=250;
+ //	bala_y=nave_y;
+	bala_x=nave_x
+    bala_y=nave_y
+    yb1=60
+ 	yb2=330
+	vb1=5
+ 	vb2=-5
+}
+
+function draw() {
+  tempo++
+  background(0);
+  
+  ellipse(vida_x,vida_y,10,10); //VIDAS//
+  
+ 	fill(255)
+  vida_x= vida_x-velocidade_vida
+  if(vida_x<0)
+  {vida_x = random(500,2000)
+  vida_x= vida_x-velocidade_vida
+  vida_y = random(0,500)
+  }
+  
+   if ( dist(bala_x,bala_y,460,nave_inimiga) < raio_x+raio_y ) { // COLISAO
+     if ( colisao == false) { 
+        pontos+=10      
+       colisao = true; 
+     }
+ }
+ else {
+    colisao = false;  
+ }
+//  fill(230,230,0);
+// ellipse(bala_x,bala_y,raio_y,raio_y); 
+ 
+  
+   textSize(25); // VIDAS E PONTOS
+  fill(250,400,10);
+  text("Vidas: "+vidas, 10, 30);
+  text("Pontos: "+pontos, 350, 30);
+  text("Nível: "+nivel, 190, 30);
+  if (pontos>passardenivel) { //Passar de Nivel//
+    nivel=nivel+1;
+    passardenivel = passardenivel + 50; 
+      tempodisparo-=10
+      vdo+=5
+  }
+  
+   ellipse(bala_x,bala_y,raio_x,5); // BALA
+  if(keyIsDown(CONTROL) && (! disparo)){ // DISPARO
+       disparo = true;   
+     bala_x=nave_x;
+	 bala_y=nave_y;
+   }
+     if (disparo) {
+    	bala_x=bala_x+19;
+    	if (bala_x> width) {
+        disparo = false; 
+    }
+  }
+        
+  ellipse(nave_x, nave_y, 25, 50); // NAVE ALIADA // 
+
+  
+  if(keyIsDown(LEFT_ARROW))
+    nave_x-=5;
+   if (keyIsDown(RIGHT_ARROW))
+    nave_x+=5;
+
+  if (keyIsDown(UP_ARROW))
+    nave_y-=5;
+
+  if (keyIsDown(DOWN_ARROW))
+    nave_y+=5;
+  //Espaço do jogo
+  if(nave_y<25){
+    nave_y=25;
+  }
+  if(nave_y>475){
+    nave_y=475;
+  }
+  if(nave_x<15){
+    nave_x=15;
+  }
+  if(nave_x>485){
+    nave_x=485;
+  }//
+
+    if ( corAmarelo ) {
+   fill(255,255,0);
+ }
+ else {
+   fill(255,255,255);
+  }
+  ellipse(460,nave_inimiga,3*raio_x,3*raio_y); //Nave Inimiga //
+	nave_inimiga+=velocidadeInimiga;
+  if(nave_inimiga>460 || nave_inimiga<40){
+    velocidadeInimiga=-velocidadeInimiga
+  }
+//  	if(nave_inimiga>height){
+//  	  nave_inimiga=random(-500,-50);
+//  }
+   ellipse(bala_inimigox,bala_inimigoy,1*raio_x,1*raio_y); //Disparo Inimigo//
+   if (tempo%tempodisparo==0){ 
+    disparooponente = true; 
+    bala_inimigox=480;
+    bala_inimigoy=nave_inimiga;
+    
+  }
+  if (disparooponente) {
+    bala_inimigox=bala_inimigox-vdo;
+    if (bala_inimigox> width) {
+       disparooponente = false; 
+    }
+    if ( dist(bala_inimigox,bala_inimigoy,nave_x,nave_y) < raio_x+raio_y ) { //Colisao e perca de vida//
+      vidas--   
+      bala_inimigox-=400  
+ }
+  rect(200,yb1,15,70); // barreira pequena que movimenta
+  rect(200,yb2,15,70); // barreira pequena que movimenta
+
+}}

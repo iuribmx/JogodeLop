@@ -1,0 +1,282 @@
+var disparo= false;
+var bala_x;
+var bala_y;
+var disparoo=false;
+var bala_inimigox ;// Tamanho disparo oponente //
+var bala_inimigoy; // Tamanho disparo oponente //
+var nave_x = 15;
+var nave_y = 250;
+var nave_inimiga = 100;
+var nave_inimigax = 480;
+var vidas = 3;
+var pontos = 0;
+var vida_x=250;
+var vida_y=250;
+var velocidade_vida=2;
+var raio_x = 20;
+var raio_y = 15;
+var corAmarelo = true; 
+var colisao = false; 
+var colisaooponente = false;
+var tamArea; 
+var passardenivel = 50;
+var nivel = 1; 
+var ybarreira1; // Tamanho da barreira que se movimenta//
+var ybarreira2 ;// Tamanho da barreira que se movimenta//
+var vbarreira1 ;// Velocidade da barreira que se movimenta//
+var vbarreira2 ;// Velocidade da barreira que se movimenta//
+var velocidadeInimiga=2;
+var tempo=0;
+var tempodisparo=60;
+var vdo=19;
+var x1 = false;
+var pontosacumulados=0;
+var vx = []; 
+var vy = [];
+var vdx = [];
+var vdy = [];
+var vtam = [];
+var qt = 100; 
+var vcorR = []; 
+var vcorG = [];
+var vcorB = [];
+
+window.onload = setup;
+
+function setup() {
+  frameRate(30);
+  tamArea = 500;
+  createCanvas(500, 500);
+  nave_x=15;
+  bala_x=nave_x;
+  nave_y=250;
+  bala_y=nave_y;
+ ybarreira1=60;
+ ybarreira2=330;
+ vbarreira1=5;
+ vbarreira2=-5
+ for (i=0;i<qt;i++){
+    vx[i] = random(0,tamArea); 
+    vy[i] = random(0,tamArea);
+    vtam[i] = random(2,4);
+    vdx[i] = random(3,4);
+    vdy[i] = random(3,4);
+ 
+
+  }
+}
+
+function preload(){
+ imgjogador = loadImage("img/nave.png");
+ imgoponente = loadImage("img/vilã.png");
+}
+
+function draw() {
+  if(x1==false && keyIsDown(13)){
+  		x1=true
+  }
+  if(pontosacumulados==70){
+	vidas++;
+	pontosacumulados=0;
+  }
+  
+  if(x1==true){
+  tempo++
+  background(0);
+   if ( dist(bala_x,bala_y,485,nave_inimiga) < raio_x+raio_y ) { //Colisaão com o adversario//
+     if ( colisao == false) { 
+       pontos+=10
+       pontosacumulados+=10      
+       colisao = true; 
+     }
+ }
+  
+  if ( dist(bala_inimigox,bala_inimigoy,nave_x,nave_y) < raio_x+raio_y ) { //Colisaão com o jogador e perda de vida//
+  
+      vidas--   
+      bala_inimigox-=400
+     
+ }
+  
+  if((bala_inimigox>=200 && bala_inimigox<220 && bala_inimigoy>ybarreira1 && bala_inimigoy<(70+ybarreira1)) || (bala_inimigox>=200 && bala_inimigox<220 && bala_inimigoy>ybarreira2 && bala_inimigoy<(70+ybarreira2))){ //Colisão do disparo inimigo com barreira menor//
+   bala_inimigox+=700
+    if ( colisaooponente == false) {  
+      
+       colisaooponente = true;
+    }
+  }
+  if((bala_x>=200 && bala_x<220 && bala_y>ybarreira1 && bala_y<(70+ybarreira1)) || (bala_x>=200 && bala_x<220 && bala_y>ybarreira2 && bala_y<(70+ybarreira2))){ //Colisão do disparo inimigo com barreira maior//
+   bala_x+=700
+    if ( colisao == false) {  
+      
+       colisao = true;
+    }
+  }
+  if(colisao){ //Colisão com o adversario e desaparecimento do tiro//
+    bala_x=600
+    bala_y=600
+    
+    colisao = false
+  }
+   
+   for ( i = 0; i < qt; i++) {
+    fill(vcorR[i], vcorG[i], vcorB[i]);
+    vx[i] = vx[i] + vdx[i];
+    vy[i] = vy[i] + vdy[i]; 
+    if ( vx[i] > width || vx[i] < 0 ) {
+       vdx[i] = -vdx[i]; 
+       vcorR[i] = random(0,255);
+       vcorG[i] = random(0,255);
+       vcorB[i] = random(0,255);
+    }
+      if ( vy[i] > height || vy[i] < 0 ) {
+       vdy[i] = -vdy[i]; 
+      
+    }
+      rect(vx[i],vy[i],vtam[i],vtam[i]); //ellipse das bolinhas
+  }
+    
+    
+
+ fill(230,230,0);
+ 
+  
+   textSize(25); // VIDAS, PONTOS E NIVEIS
+  fill(250,400,10);
+  text("Vidas: "+vidas, 10, 30);
+  text("Pontos: "+pontos,350, 30);
+  text("Nível: "+nivel, 190, 30);
+    if (pontos>passardenivel) { //Passar de Nivel//
+    nivel=nivel+1;
+    passardenivel = passardenivel + 50; 
+      tempodisparo-=10
+      vdo+=5
+
+  }
+    
+    
+    ellipse(vida_x,vida_y,10,10); //VIDAS//
+  
+ 	fill(255)
+  vida_x= vida_x-velocidade_vida
+  if(vida_x<0)
+  {vida_x = random(500,2000)
+  vida_x= vida_x-velocidade_vida
+  vida_y = random(0,500)
+  }
+  
+    if ( dist(vida_x,vida_y,nave_x,nave_y) < raio_x+raio_y ) { //Colisaão com o jogador e perda de vida//
+  
+      vidas=vidas+1
+      vida_x-=400
+     
+ }
+  
+  if (keyIsDown(CONTROL) && (! disparo) ){ 
+    disparo = true; 
+    bala_x=nave_x;
+    bala_y=nave_y;
+    
+  }
+  if (disparo) { // DISPARO //
+    bala_x=bala_x+19;
+    if (bala_x> width) {
+       disparo = false; 
+    }
+      ellipse(bala_x,bala_y+20,1*raio_x,1*3); // BALA //
+
+  }
+    if (tempo%tempodisparo==0){ // BALA OPONENTE //
+    disparoo = true; 
+    bala_inimigox=nave_inimigax;
+    bala_inimigoy=nave_inimiga-1;
+    
+  }
+  ellipse(bala_inimigox,bala_inimigoy,1*raio_x,1*raio_x); // BALA OPONENTE //
+  
+  if (disparoo) { // DISPARO OPONENTE //
+    bala_inimigox=bala_inimigox-vdo;
+    if (bala_inimigox> width) {
+       disparoo = false; 
+    }
+      
+
+  }
+  if (keyIsDown(LEFT_ARROW))
+   nave_x-=5;
+
+  if (keyIsDown(RIGHT_ARROW))
+   nave_x+=5;
+
+  if (keyIsDown(UP_ARROW))
+    nave_y-=5;
+
+  if (keyIsDown(DOWN_ARROW))
+    nave_y+=5;
+if(nave_y<25){
+ 
+  nave_y=25;
+}
+  if(nave_y>475){
+    nave_y=475;
+  }
+  if(nave_x<15){
+    nave_x=15;
+  }
+  if(nave_x>485){
+    nave_x=485;
+    
+}
+  ybarreira2+=vbarreira2
+  ybarreira1+=vbarreira1
+  if(ybarreira1>430 || ybarreira1<0){ // VELOCIDADE DA BARREIRA 1 //
+    vbarreira1=-vbarreira1
+  }
+ 
+  if(ybarreira2>430 || ybarreira2<0){ // VELOCIDADE DA BARREIRA 2 //
+    vbarreira2=-vbarreira2
+  }
+  
+   if ( corAmarelo ) {
+   fill(255,255,0);
+ }
+ else {
+   fill(255,255,255);
+  }
+  //ellipse(nave_inimigax, nave_inimiga, 2*raio_y, 4*raio_x); // NAVE INIMIGA //
+  nave_inimiga=nave_inimiga+velocidadeInimiga;
+  if(nave_inimiga>460 || nave_inimiga<40){
+    velocidadeInimiga=-velocidadeInimiga
+  }
+ 
+  if(nave_inimiga>height){
+   nave_inimiga=random(-600,-50); 
+  }
+     fill(255,255,0);
+  
+//  ellipse(nave_x,nave_y+17,30,50); //ellipse do jogador
+ 
+  image(imgjogador,nave_x-15,nave_y-30,40,70) //IMAGEM DO JOGADOR//
+  image(imgoponente,nave_inimigax-65,nave_inimiga-70,80,130)//IMAGEM DO OPONENTE//
+  
+  rect(200,ybarreira1,15,90); // Barreira pequena que movimenta //
+  rect(200,ybarreira2,15,90); // Barreira pequena que movimenta //
+
+if(vidas<0){
+  background(0);
+  textSize(50);
+  text("GAME OVER",110,250)
+}
+}
+  else{
+     background(255,255,200);
+  	textSize(25);
+  	text("  Pressione CONTROL para atirar",40,250)
+  	text( "\n     ENTER para iniciar o jogo",55,270)
+  }
+  if(nivel>5){
+  background(0);
+  textSize(35);
+  text("PARABÉNS VOCÊ VENCEU",30,250)
+  }
+}

@@ -1,0 +1,10 @@
+<html>
+  <head>
+	  <meta charset="UTF-8">
+	  <title>Nave</title>
+  </head>
+  <body>
+    <script type="text/javascript" src="js/p5.min.js "></script>
+    <script type="text/javascript" src="js/jogo-iuri.js "></script>
+  </body>
+</html>

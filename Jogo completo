@@ -83,7 +83,7 @@ function draw() {
   if(x1==true){
   tempo++
   background(0);
-   if ( dist(bala_x,bala_y,nave_inimigax,nave_inimiga) < raio_x+raio_y ) { //Colisaão com o adversario//
+   if ( dist(bala_x,bala_y,nave_inimigax,nave_inimiga) < 2*raio_x+raio_y ) { //Colisaão com o adversario//
      if ( colisao == false) { 
        pontos+=10
        pontosacumulados+=10      

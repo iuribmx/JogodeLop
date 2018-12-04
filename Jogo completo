@@ -25,7 +25,7 @@ var ybarreira1; // Tamanho da barreira que se movimenta//
 var ybarreira2 ;// Tamanho da barreira que se movimenta//
 var vbarreira1 ;// Velocidade da barreira que se movimenta//
 var vbarreira2 ;// Velocidade da barreira que se movimenta//
-var velocidadeInimiga=2;
+var velocidadeInimiga=4;
 var tempo=0;
 var tempodisparo=60;
 var vdo=19;
@@ -75,15 +75,15 @@ function draw() {
   if(x1==false && keyIsDown(13)){
   		x1=true
   }
-  if(pontosacumulados==70){
-	vidas++;
-	pontosacumulados=0;
-  }
+ // if(pontosacumulados==70){
+//	vidas++;
+//	pontosacumulados=0;
+ // }
   
   if(x1==true){
   tempo++
   background(0);
-   if ( dist(bala_x,bala_y,485,nave_inimiga) < raio_x+raio_y ) { //Colisaão com o adversario//
+   if ( dist(bala_x,bala_y,nave_inimigax,nave_inimiga) < raio_x+raio_y ) { //Colisaão com o adversario//
      if ( colisao == false) { 
        pontos+=10
        pontosacumulados+=10      
@@ -133,7 +133,7 @@ function draw() {
        vdy[i] = -vdy[i]; 
       
     }
-      rect(vx[i],vy[i],vtam[i],vtam[i]); //ellipse das bolinhas
+      rect(vx[i],vy[i],vtam[i],vtam[i]); //ELLIPSE DAS BOLINHAS//
   }
     
     
@@ -150,7 +150,7 @@ function draw() {
     nivel=nivel+1;
     passardenivel = passardenivel + 50; 
       tempodisparo-=10
-      vdo+=5
+      vdo+=6
 
   }
     
@@ -189,10 +189,10 @@ function draw() {
     if (tempo%tempodisparo==0){ // BALA OPONENTE //
     disparoo = true; 
     bala_inimigox=nave_inimigax;
-    bala_inimigoy=nave_inimiga-1;
+    bala_inimigoy=nave_inimiga;
     
   }
-  ellipse(bala_inimigox,bala_inimigoy,1*raio_x,1*raio_x); // BALA OPONENTE //
+  ellipse(bala_inimigox,bala_inimigoy,1*raio_x,3); // BALA OPONENTE //
   
   if (disparoo) { // DISPARO OPONENTE //
     bala_inimigox=bala_inimigox-vdo;
@@ -243,7 +243,7 @@ if(nave_y<25){
  else {
    fill(255,255,255);
   }
-  //ellipse(nave_inimigax, nave_inimiga, 2*raio_y, 4*raio_x); // NAVE INIMIGA //
+ // ellipse(nave_inimigax, nave_inimiga, 2*raio_y, 4*raio_x); // NAVE INIMIGA //
   nave_inimiga=nave_inimiga+velocidadeInimiga;
   if(nave_inimiga>460 || nave_inimiga<40){
     velocidadeInimiga=-velocidadeInimiga
@@ -257,7 +257,7 @@ if(nave_y<25){
 //  ellipse(nave_x,nave_y+17,30,50); //ellipse do jogador
  
   image(imgjogador,nave_x-15,nave_y-30,40,70) //IMAGEM DO JOGADOR//
-  image(imgoponente,nave_inimigax-65,nave_inimiga-70,80,130)//IMAGEM DO OPONENTE//
+  image(imgoponente,nave_inimigax-65,nave_inimiga-70,4*raio_x,9*raio_y)//IMAGEM DO OPONENTE//
   
   rect(200,ybarreira1,15,90); // Barreira pequena que movimenta //
   rect(200,ybarreira2,15,90); // Barreira pequena que movimenta //

@@ -130,7 +130,7 @@ function draw() {
        vdy[i] = -vdy[i]; 
       
     }
-      ellipse(vx[i],vy[i],vtam[i],vtam[i]); //ellipse das bolinhas
+      rect(vx[i],vy[i],vtam[i],vtam[i]); //ellipse das bolinhas
   }
     
     

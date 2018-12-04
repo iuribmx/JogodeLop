@@ -35,10 +35,12 @@ var vy = [];
 var vdx = []
 var vdy = []
 var vtam = [];
-var qt = 30; 
+var qt = 100; 
 var vcorR = []; 
 var vcorG = [];
 var vcorB = [];
+
+window.onload = setup;
 
 function setup() {
   frameRate(30);
@@ -52,21 +54,20 @@ function setup() {
  ybarreira2=330
  vbarreira1=5
  vbarreira2=-5
- for ( i = 0; i < qt; i++) { 
+ for (i=0;i<qt;i++){
     vx[i] = random(0,tamArea); 
     vy[i] = random(0,tamArea);
-    vtam[i] = random(5,15);
-    vdx[i] = random(-6,6);
-    vdy[i] = random(-6,6);
-    vcorR[i] = random(0,255);
-    vcorG[i] = random(0,255);
-    vcorB[i] = random(0,255);
+    vtam[i] = random(2,4);
+    vdx[i] = random(3,4);
+    vdy[i] = random(3,4);
+ 
+
   }
-  
 }
-//function preload(){
-//	imgjogador = loadImage("img/nave.jpg");
-//}
+
+function preload(){
+ imgjogador = loadImage("img/nave.png");
+}
 
 function draw() {
   if(x1==false && keyIsDown(13)){
@@ -180,7 +181,7 @@ function draw() {
     if (bala_x> width) {
        disparo = false; 
     }
-      ellipse(bala_x,bala_y+20,1*raio_x,1*raio_x); // BALA //
+      ellipse(bala_x,bala_y+20,1*raio_x,1*3); // BALA //
 
   }
     if (tempo%tempodisparo==0){ // BALA OPONENTE //
@@ -249,9 +250,9 @@ if(nave_y<25){
   }
      fill(255,255,0);
   
-  ellipse(nave_x,nave_y+17,30,50); //ellipse do jogador
+//  ellipse(nave_x,nave_y+17,30,50); //ellipse do jogador
  
-//   image(imgjogador,nave_x-15,nave_y-30,40,70)
+ image(imgjogador,nave_x-15,nave_y-30,40,70)
   
   rect(200,ybarreira1,15,90); // Barreira pequena que movimenta //
   rect(200,ybarreira2,15,90); // Barreira pequena que movimenta //
